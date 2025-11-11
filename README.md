@@ -1,5 +1,7 @@
 # GEWDiff: Geometric Enhanced Wavelet-based Diffusion Model for Hyperspectral Image Super-resolution
 
+[![arXiv](https://img.shields.io/badge/arXiv-2502.12345-b31b1b.svg)](https://arxiv.org/abs/2511.07103)
+
 This is the official PyTorch implementation of:
 
 **GEWDiff: Geometric Enhanced Wavelet-based Diffusion Model for Hyperspectral Image Super-resolution**
