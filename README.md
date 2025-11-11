@@ -9,7 +9,11 @@ This is the official PyTorch implementation of:
 GEWDiff integrates wavelet-domain frequency decomposition and geometric-aware attention into a diffusion model for high-quality hyperspectral image super-resolution (HSI-SR).
 
 ---
-
+## 📰 News
+- **2025.11** 🚀 Our paper has been accepted to **AAAI 2026**!
+- **2025.11** 📄 Preprint released on [arXiv](https://arxiv.org/abs/2511.07103)
+- **2025.07** 🔥 Code and models are publicly available
+  
 ## 🛠️ Environment Setup
 
 **Recommended:**
