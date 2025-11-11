@@ -156,11 +156,14 @@ Qualitative comparison with other methods:
 ## 📄 Citation
 
 ```bibtex
-@article{2025gew_diff,
-  title={GEWDiff: Geometric Enhanced Wavelet-based Diffusion Model for Hyperspectral Image Super-resolution},
-  author={Name and Others},
-  journal={arXiv preprint arXiv:2500.XXXX},
-  year={2025}
+@misc{wang2025gewdiffgeometricenhancedwaveletbased,
+      title={GEWDiff: Geometric Enhanced Wavelet-based Diffusion Model for Hyperspectral Image Super-resolution}, 
+      author={Sirui Wang and Jiang He and Natàlia Blasco Andreo and Xiao Xiang Zhu},
+      year={2025},
+      eprint={2511.07103},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2511.07103}, 
 }
 ```
 
@@ -169,5 +172,6 @@ Qualitative comparison with other methods:
 ## 📬 Contact
 
 ```
-
+sirui.wang@tum.de
+xiaoxiang.zhu@tum.de
 ---
