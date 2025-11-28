@@ -10,7 +10,7 @@ GEWDiff integrates wavelet-domain frequency decomposition and geometric-aware at
 
 ---
 ## 📰 News
-- **2025.11** 🔥 Training dataset and checkpoint released on [huggingface](https://huggingface.co/datasets/zhu-xlab/GEWDiff_training_dataset)
+- **2025.11** 🔥 Training dataset and checkpoint released on [huggingface](https://huggingface.co/datasets/zhu-xlab/GEWDiff_training_dataset).
 - **2025.11** 🚀 Our paper has been accepted to **AAAI 2026**!
 - **2025.11** 📄 Preprint released on [arXiv](https://arxiv.org/abs/2511.07103). 
 - **2025.07** 🔥 Code and models are publicly available. 
