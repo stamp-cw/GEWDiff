@@ -1,6 +1,8 @@
 diffusers
 tifffile
-RWT
 accelerate
 scikit-image
 scikit-learn
+matplotlib
+einops
+PyWavelets

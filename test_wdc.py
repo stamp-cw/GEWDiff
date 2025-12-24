@@ -7,11 +7,12 @@ import torch.distributed as dist
 from diffusers import UNet2DModel
 import datetime
 import torch.distributed as dist
-dist.init_process_group(backend='nccl')
+# dist.init_process_group(backend='nccl')
 import torch.backends.cudnn as cudnn
 cudnn.benchmark = True
 
-from model.edm import ElucidatedDiffusion, UNet2DModelWithBN, UNet2DWithSpectralFidelity,UNet3DWithSpectralFidelity, EMA
+# from model.edm import ElucidatedDiffusion, UNet2DModelWithBN, UNet2DWithSpectralFidelity,UNet3DWithSpectralFidelity, EMA
+from model.edm import ElucidatedDiffusion, UNet2DModelWithBN, UNet2DWithSpectralFidelity,UNet3DWithSpectralFidelity
 from utils.eval import quality_assessment
 from model.RWT import rwa, inv_rwa
 import argparse

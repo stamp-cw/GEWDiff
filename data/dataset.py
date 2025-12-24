@@ -7,7 +7,7 @@ import torch.distributed as dist
 from scipy.ndimage import zoom
 from torchvision import transforms
 import numpy as np
-from RWT import rwa, inv_rwa
+from model.RWT import rwa, inv_rwa
 from sklearn.decomposition import PCA
 from skimage import exposure
 preprocess = transforms.Compose(

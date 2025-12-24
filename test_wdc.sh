@@ -1,0 +1,1 @@
+accelerate launch --num_processes 1 --mixed_precision=fp16 test_wdc.py --compack_bands 121 --pca_bands 20 --train_batch_size 1 --timesteps 50 --num_epochs 200 --mask True --edge True  --l1_lambda 0.8 --l2_lambda 0.1 --l3_lambda 0.1 --sigma_min 0.2 --sigma_max 90 --sigma_data 0.5 --rho 0.7

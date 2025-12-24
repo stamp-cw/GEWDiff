@@ -1,0 +1,1 @@
+accelerate launch --multi_gpu --num_processes 4 --mixed_precision=fp16 GEWDiff/train.py --compack_bands 121 --pca_bands 20 --train_batch_size 1 --timesteps 50 --num_epochs 200 --mask True --edge True  --l1_lambda 0.8 --l2_lambda 0.1 --l3_lambda 0.1 --recall 0

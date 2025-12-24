@@ -22,7 +22,7 @@ import torch.nn.functional as F
 from tqdm import tqdm
 from einops import rearrange, reduce
 from diffusers import UNet2DModel,UNet3DConditionModel
-from unet3d import UNet3DModel 
+from .unet3d import UNet3DModel
 import matplotlib.pyplot as plt
 from copy import deepcopy
 

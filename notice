@@ -1,0 +1,10 @@
+
+ cp vgg19-dcbb9e9d.pth ~/.cache/torch/hub/checkpoints
+
+ cd /workspace/
+ sudo ln -s /home/featurize/GEWDiff diff_sr
+
+ accelerate launch --multi_gpu --num_processes 4 --mixed_precision=fp16 GEWDiff/train.py --compack_bands 121 --pca_bands 20 --train_batch_size 1 --timesteps 50 --num_epochs 200 --mask True --edge True  --l1_lambda 0.8 --l2_lambda 0.1 --l3_lambda 0.1 --recall 0
+
+
+accelerate launch --num_processes 1 --mixed_precision=fp16 train.py --compack_bands 121 --pca_bands 20 --train_batch_size 1 --timesteps 50 --num_epochs 200 --mask True --edge True  --l1_lambda 0.8 --l2_lambda 0.1 --l3_lambda 0.1 --recall 0

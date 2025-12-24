@@ -18,7 +18,7 @@ from diffusers.optimization import get_cosine_schedule_with_warmup
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"] = "0, 1, 2, 3"  # The GPUs visible to PyTorch (visible indices: 0, 1, 2, 3)
 import torch.distributed as dist
-dist.init_process_group(backend='nccl')
+# dist.init_process_group(backend='nccl')
 import torch.backends.cudnn as cudnn
 cudnn.benchmark = True
 import torch.nn.functional as F
@@ -187,12 +187,17 @@ def save_checkpoint(unet, gaussian_diff, optimizer, epoch, loss):
         'loss': loss,
     }
     filename=os.path.join(config.output_dir, f'epoch_{epoch + 1}.pth')
-    if dist.get_rank() == 0:
-        torch.save(checkpoint, filename)
-        print(f"Checkpoint saved at {filename}")
+    # if dist.get_rank() == 0:
+    #     torch.save(checkpoint, filename)
+    #     print(f"Checkpoint saved at {filename}")
+    torch.save(checkpoint, filename)
+    print(f"Checkpoint saved at {filename}")
+
+
 #os.makedirs(config.output_dir, exist_ok=True)
 def train_loop(config,mixed_precision="fp16", seed=42):
     set_seed(42)
+    # torch.cuda.empty_cache()
     best_val_loss = float('inf')
     global_step = 0
     accelerator = Accelerator(mixed_precision=mixed_precision)
@@ -296,9 +301,12 @@ def train_loop(config,mixed_precision="fp16", seed=42):
             'loss': best_val_loss,
             }
             filename=os.path.join(config.output_dir, f'best.pth')
-            if dist.get_rank() == 0:
-                torch.save(checkpoint, filename)
-                print(f"Checkpoint saved at {filename}")
+            # if dist.get_rank() == 0:
+            #     torch.save(checkpoint, filename)
+            #     print(f"Checkpoint saved at {filename}")
+            # 单卡
+            torch.save(checkpoint, filename)
+            print(f"Checkpoint saved at {filename}")
 
         if (epoch + 1) % config.save_image_epochs == 0:
             x = next(iter(val_loader))['img_lr_hf'].to(accelerator.device)
@@ -367,4 +375,4 @@ if __name__ == "__main__":
     print(f"L1, L2, L3 lambda: {config.l1_lambda} {config.l2_lambda} {config.l3_lambda}")
     print(f"Recall: {config.recall}")
     train_loop(config=config,mixed_precision="fp16", seed=42)
-    dist.destroy_process_group()
+    # dist.destroy_process_group()
