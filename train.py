@@ -48,7 +48,8 @@ class TrainingConfig:
         self.mixed_precision = 'no'  # 'fp16' for automatic mixed precision
         self.output_dir = '/workspace/diff_sr/result/'  # output directory
         self.out_size = 256 # the generated image resolution
-        self.bands = 242
+        # self.bands = 242
+        self.bands = 3
         self.overwrite_output_dir = True  # overwrite the old model when re-running the notebook
         self.num_timesteps = num_timesteps
         self.seed = 0
