@@ -53,6 +53,7 @@ def resize_image_to_quarter(image_np):
 class Dataset(torch.utils.data.Dataset):
     def __init__(self, data_dir,config,is_train=False):
         #self.data_dir_lq = os.path.join(data_dir+ '/lq')
+        self.data_dir_lq = os.path.join(data_dir+ '/wrap')
         self.data_dir_gt = os.path.join(data_dir+ '/gt')
         self.data_dir_mask = os.path.join(data_dir+ '/mask')
         self.data_dir_edge = os.path.join(data_dir+ '/edge')
@@ -61,7 +62,10 @@ class Dataset(torch.utils.data.Dataset):
         #self.data_dir_lq_wt = os.path.join(data_dir+ '/lq_wt')
         #self.data_dir_lq_w = os.path.join(data_dir+ '/lq_w')
         self.config=config
-        self.files = [file for file in os.listdir(self.data_dir_gt) if file.endswith('.tif')]
+        # self.files = [file for file in os.listdir(self.data_dir_gt) if file.endswith('.tif')]
+        self.files = [file for file in os.listdir(self.data_dir_gt) if file.endswith('.png')]
+        self.wrap_files = [file for file in os.listdir(self.data_dir_lq) if file.endswith('.png')]
+
         self.pca_lr = PCA(n_components=config.compack_bands)
         self.is_train = is_train
         self.l = 0
@@ -76,8 +80,9 @@ class Dataset(torch.utils.data.Dataset):
         
         for file in self.files:
             img_gt_o = tifffile.imread(os.path.join(self.data_dir_gt, file))
-            img = resize_image_to_quarter(img_gt_o)   
-            img_gt = img_gt_o / 10000 
+            # img = resize_image_to_quarter(img_gt_o)
+            img = tifffile.imread(os.path.join(self.data_dir_lq, file))
+            img_gt = img_gt_o / 10000
 
             x = self.config.out_size  # 256
             x1 = int(self.config.out_size / 4)  # 64
@@ -114,13 +119,21 @@ class Dataset(torch.utils.data.Dataset):
         print("Low-resolution PCA explained variance ratio:", self.pca_lr.explained_variance_ratio_)
 
     def __getitem__(self, idx):
-        file = self.files[idx]
+        # file = self.files[idx]
         #img_o=tifffile.imread(os.path.join(self.data_dir_lq, file))
         #img=img_o/ 3000
+        # img_gt_o= tifffile.imread(os.path.join(self.data_dir_gt, file))
+        # img_gt=img_gt_o/ 10000
+        # img_o=resize_image_to_quarter(img_gt_o)
+        # img=img_o/ 10000
+
+        file = self.files[idx]
         img_gt_o= tifffile.imread(os.path.join(self.data_dir_gt, file))
         img_gt=img_gt_o/ 10000
-        img_o=resize_image_to_quarter(img_gt_o)
+        # img_o=resize_image_to_quarter(img_gt_o)
+        img_o = tifffile.imread(os.path.join(self.data_dir_lq, file))
         img=img_o/ 10000
+
         if self.config.mask == False:
             mask = torch.ones([self.config.out_size, self.config.out_size])
         else:
@@ -139,8 +152,10 @@ class Dataset(torch.utils.data.Dataset):
         x=self.config.out_size
         z=self.config.bands
         x1=int(self.config.out_size/4)
+
         im= torch.Tensor(preprocess1(img_gt_o.transpose(1, 2, 0)).reshape(z,x*x).transpose(0,1))
         im_lr= torch.Tensor(preprocess1(img_o.transpose(1, 2, 0)).reshape(z,x*x).transpose(0,1))
+
         if self.config.compack_bands -1>= int(self.config.bands/2):
             self.l = 1
         elif self.config.compack_bands -1>= int(self.config.bands/4):
