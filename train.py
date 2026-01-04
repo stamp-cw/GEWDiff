@@ -16,7 +16,8 @@ from diffusers import UNet2DModel
 from diffusers.optimization import get_cosine_schedule_with_warmup
 
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-os.environ["CUDA_VISIBLE_DEVICES"] = "0, 1, 2, 3"  # The GPUs visible to PyTorch (visible indices: 0, 1, 2, 3)
+# os.environ["CUDA_VISIBLE_DEVICES"] = "0, 1, 2, 3"  # The GPUs visible to PyTorch (visible indices: 0, 1, 2, 3)
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"  # The GPUs visible to PyTorch (visible indices: 0, 1, 2, 3)
 import torch.distributed as dist
 # dist.init_process_group(backend='nccl')
 import torch.backends.cudnn as cudnn
