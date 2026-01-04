@@ -1,6 +1,8 @@
 import numpy as np
 import torch
 import os
+
+from PIL import Image
 from torchvision import transforms
 import tifffile
 import torch.distributed as dist
@@ -10,6 +12,8 @@ import numpy as np
 from model.RWT import rwa, inv_rwa
 from sklearn.decomposition import PCA
 from skimage import exposure
+
+
 preprocess = transforms.Compose(
     [
         #transforms.Resize((config.out_size, config.out_size)),
@@ -64,7 +68,7 @@ class Dataset(torch.utils.data.Dataset):
         self.config=config
         # self.files = [file for file in os.listdir(self.data_dir_gt) if file.endswith('.tif')]
         self.files = [file for file in os.listdir(self.data_dir_gt) if file.endswith('.png')]
-        self.wrap_files = [file for file in os.listdir(self.data_dir_lq) if file.endswith('.png')]
+        # self.wrap_files = [file for file in os.listdir(self.data_dir_lq) if file.endswith('.png')]
 
         self.pca_lr = PCA(n_components=config.compack_bands)
         self.is_train = is_train
@@ -79,9 +83,11 @@ class Dataset(torch.utils.data.Dataset):
         all_patches_lr = []
         
         for file in self.files:
-            img_gt_o = tifffile.imread(os.path.join(self.data_dir_gt, file))
+            # img_gt_o = tifffile.imread(os.path.join(self.data_dir_gt, file))
+            img_gt_o = np.array(Image.open(os.path.join(self.data_dir_gt, file))).transpose(2, 0, 1).astype(np.float32)
             # img = resize_image_to_quarter(img_gt_o)
-            img = tifffile.imread(os.path.join(self.data_dir_lq, file))
+            # img = tifffile.imread(os.path.join(self.data_dir_lq, file))
+            img = np.array(Image.open(os.path.join(self.data_dir_lq, file))).transpose(2, 0, 1).astype(np.float32)
             img_gt = img_gt_o / 10000
 
             x = self.config.out_size  # 256
@@ -128,10 +134,10 @@ class Dataset(torch.utils.data.Dataset):
         # img=img_o/ 10000
 
         file = self.files[idx]
-        img_gt_o= tifffile.imread(os.path.join(self.data_dir_gt, file))
+        img_gt_o= np.array(Image.open(os.path.join(self.data_dir_gt, file))).transpose(2, 0, 1).astype(np.float32)
         img_gt=img_gt_o/ 10000
         # img_o=resize_image_to_quarter(img_gt_o)
-        img_o = tifffile.imread(os.path.join(self.data_dir_lq, file))
+        img_o = np.array(Image.open(os.path.join(self.data_dir_lq, file))).transpose(2, 0, 1).astype(np.float32)
         img=img_o/ 10000
 
         if self.config.mask == False:
